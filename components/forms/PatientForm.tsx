@@ -14,19 +14,17 @@ import { createUser } from "@/lib/actions/pations.actions";
 
 export enum FormFieldType {
   INPUT = "input",
-  TEXTAREA = 'textarea'
-  PHONE_INPUT = 'phoneInput'
-  CHECKBOX = 'checkbox'
-  DATE_PICKER = 'datePicker'
-  SELECT = 'select'
-  SKELETON = 'skeleton'
+  TEXTAREA = "textarea",
+  PHONE_INPUT = "phoneInput",
+  CHECKBOX = "checkbox",
+  DATE_PICKER = "datePicker",
+  SELECT = "select",
+  SKELETON = "skeleton",
 }
 
-
-
 const PatientForm = () => {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
@@ -36,19 +34,25 @@ const PatientForm = () => {
     },
   });
 
- async function onSubmit({name, email, phone }: z.infer<typeof UserFormValidation>) {
+  async function onSubmit(data: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
 
     try {
-      const userData = { name, email, phone }
+      const user = await createUser(data);
+      console.log(user);
 
-      const user = await createUser(userData)
-
-      if(user) router.push(`/patients/${user.$id}/register`)
+      if (user && user.$id) {
+        router.push(`/patients/${user.$id}/register`);
+      } else {
+        console.error("User or user.$id is undefined");
+      }
     } catch (error) {
-      console.log(error)
+      console.error("Error during user creation:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
@@ -73,17 +77,17 @@ const PatientForm = () => {
           label="Email"
           placeholder="johndoe@mail.com"
           iconSrc="/assets/icons/email.svg"
-          iconAlt="user"
+          iconAlt="email"
         />
 
-<CustomFormField
+        <CustomFormField
           fieldType={FormFieldType.PHONE_INPUT}
           control={form.control}
           name="phone"
           label="Phone Number"
           placeholder="(380) 000 000000"
-       
         />
+
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
