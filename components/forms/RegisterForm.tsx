@@ -56,13 +56,13 @@ const RegisterForm = ({ user }: { user: User }) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
           <h1 className="header">Hi there 👋</h1>
-          <p className="text-dark-700">Let us know more about yourself.</p>
+          <p className="text-dark-700">Let us know more about yourself</p>
         </section>
         <section className="mb-12 space-y-4">
           <p className="space-y-6">
             <div className="mb-9 space-y-1">
               {" "}
-              <h2 className="sub-header">Personal Information.</h2>
+              <h2 className="sub-header">Personal Information</h2>
             </div>
           </p>
         </section>
@@ -168,7 +168,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           <p className="space-y-6">
             <div className="mb-9 space-y-1">
               {" "}
-              <h2 className="sub-header">Medical Information.</h2>
+              <h2 className="sub-header">Medical Information</h2>
             </div>
           </p>
         </section>
@@ -249,7 +249,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           <p className="space-y-6">
             <div className="mb-9 space-y-1">
               {" "}
-              <h2 className="sub-header">Identification and Verification.</h2>
+              <h2 className="sub-header">Identification and Verification</h2>
             </div>
           </p>
         </section>
@@ -283,10 +283,39 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Scanned copy of identification document"
           renderSkeleton={(field) => (
             <FormControl>
-              <FIleUploader />
+              <FIleUploader files={field.value} onChange={field.onChange} />
             </FormControl>
           )}
         />
+
+        <section className="mb-12 space-y-4">
+          <p className="space-y-6">
+            <div className="mb-9 space-y-1">
+              {" "}
+              <h2 className="sub-header">Consent and Privacy</h2>
+            </div>
+          </p>
+        </section>
+
+        <CustomFormField
+          fieldType={FormFieldType.CHECKBOX}
+          control={form.control}
+          name="treatmentConsent"
+          label="I consent to treatment"
+        />
+        <CustomFormField
+          fieldType={FormFieldType.CHECKBOX}
+          control={form.control}
+          name="disclosureConsent"
+          label="I consent to disclosure of information"
+        />
+        <CustomFormField
+          fieldType={FormFieldType.CHECKBOX}
+          control={form.control}
+          name="privacyConsent"
+          label="I consent to privacy policy"
+        />
+
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
