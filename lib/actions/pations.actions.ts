@@ -72,7 +72,7 @@ export const registerPatient = async ({
 
       file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
     }
-
+    console.log({ gender: patient.gender });
     // Create new patient document -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#createDocument
     const newPatient = await databases.createDocument(
       DATABASE_ID!,

@@ -21,7 +21,7 @@ export const PatientFormValidation = z.object({
     .string()
     .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
   birthDate: z.coerce.date(),
-  gender: z.enum(["Male", "Female", "Other"]),
+  gender: z.enum(["male", "female", "other"]),
   address: z
     .string()
     .min(5, "Address must be at least 5 characters")
@@ -50,7 +50,7 @@ export const PatientFormValidation = z.object({
     .min(2, "Policy number must be at least 2 characters")
     .max(50, "Policy number must be at most 50 characters"),
   allergies: z.string().optional(),
-  currentMedication: z.string().optional(),
+  currentMedications: z.string().optional(),
   familyMedicalHistory: z.string().optional(),
   pastMedicalHistory: z.string().optional(),
   identificationType: z.string().optional(),
