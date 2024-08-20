@@ -1,4 +1,5 @@
 import AppointmentForm from "@/components/forms/AppointmentForm";
+import { getPatient } from "@/lib/actions/pations.actions";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +20,11 @@ export default async function NewAppointment({
             className="mb-12 h-10 w-fit"
           />
 
-          <AppointmentForm type="create" userId={userId} />
+          <AppointmentForm
+            type="create"
+            userId={userId}
+            patientId={patient.$id}
+          />
 
           <p className="justify-items-end text-dark-600 xl:text-left">
             © 2024 CarePulse

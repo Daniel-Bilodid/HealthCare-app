@@ -40,7 +40,7 @@ interface CustomProps {
   iconSrc?: string;
   iconAlt?: string;
   disabled?: boolean;
-  dateFornat?: string;
+  dateFormat?: string;
   showTimeSelect?: boolean;
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
