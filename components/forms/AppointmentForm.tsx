@@ -34,9 +34,10 @@ const AppointmentForm = ({
 }) => {
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const AppointmentFormValidation = getAppointmentSchema(type);
 
-  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {

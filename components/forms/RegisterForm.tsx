@@ -44,11 +44,10 @@ const RegisterForm = ({ user }: { user: User }) => {
     console.log("Form submitted:", values);
     setIsLoading(true);
 
-    // Store file info in form data as
     let formData;
     if (
       values.identificationDocument &&
-      values.identificationDocument?.length > 0
+      values.identificationDocument.length > 0
     ) {
       const blobFile = new Blob([values.identificationDocument[0]], {
         type: values.identificationDocument[0].type,
@@ -88,17 +87,25 @@ const RegisterForm = ({ user }: { user: User }) => {
         disclosureConsent: values.disclosureConsent,
       };
 
+      // Отладка: выводим данные пациента перед регистрацией
+      console.log("Registering patient:", patient);
+
       const newPatient = await registerPatient(patient);
-      console.log(user.$id);
+      console.log("New Patient:", newPatient);
+      console.log("User ID:", user.$id);
+
+      // Проверяем, получен ли новый пациент
       if (newPatient && user.$id) {
-        console.log("NEEEW");
+        console.log("Redirecting to new appointment...");
         router.push(`/patients/${user.$id}/new-appointment`);
+      } else {
+        console.error("Failed to register patient or user ID is invalid.");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error during patient registration:", error);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
