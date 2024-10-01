@@ -8,18 +8,14 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
-import {
-  CreateAppointmentSchema,
-  getAppointmentSchema,
-  UserFormValidation,
-} from "@/lib/validation";
+
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/pations.actions";
 import { FormFieldType } from "./PatientForm";
 import { Doctors } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
-import { AppointmentFormValidation } from "../../lib/validation";
+import { getAppointmentSchema } from "../../lib/validation";
 import { scheduler } from "timers/promises";
 import { createAppointment } from "@/lib/actions/appointment.actions";
 
@@ -61,6 +57,7 @@ const AppointmentForm = ({
         status = "pending";
         break;
     }
+
     try {
       if (type === "create" && patientId) {
         const appointmentData = {
@@ -69,9 +66,11 @@ const AppointmentForm = ({
           primaryPhysician: values.primaryPhysician,
           schedule: new Date(values.schedule),
           reason: values.reason!,
+
           note: values.note,
           status: status as Status,
         };
+
         const appointment = await createAppointment(appointmentData);
 
         if (appointment) {

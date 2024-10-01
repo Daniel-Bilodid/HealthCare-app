@@ -14,6 +14,7 @@ export const createAppointment = async (
   appointment: CreateAppointmentParams
 ) => {
   try {
+    console.log("Creating appointment with data:", appointment);
     const newAppointment = await databases.createDocument(
       DATABASE_ID!,
       PATIENT_COLLECTION_ID!,
@@ -22,6 +23,6 @@ export const createAppointment = async (
     );
     return parseStringify(newAppointment);
   } catch (error) {
-    console.log(error);
+    console.error("Error creating appointment:", error);
   }
 };
